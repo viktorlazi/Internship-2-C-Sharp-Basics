@@ -56,6 +56,23 @@ namespace Internship_2_C_Sharp_Basics
             }while(userInput != 0);
         }
 
+        static bool userCheck(){
+            System.Console.WriteLine("Jesi li siguran? d/n: ");
+
+            do{
+                var userInput = Console.ReadLine();
+
+                if(userInput.Equals("d") || userInput.Equals("da")){
+                    return true;
+                }else if(userInput.Equals("n") || userInput.Equals("ne")){
+                    return false;
+                }else{
+                    System.Console.WriteLine("Pogresan unos.\n" +
+                                    "Dozvoljeni unosi su:\n" +
+                                    "da/ne/d/n");
+                }
+            }while(true);
+        }
         static void printList(Dictionary<int, string> x){
             Console.Clear();
             System.Console.WriteLine("Playlista:");
@@ -93,7 +110,9 @@ namespace Internship_2_C_Sharp_Basics
                 System.Console.WriteLine("Pjesma ne postoji");
             } 
         }
-
+        static void newSong(){
+            
+        }
 
     }
 }
