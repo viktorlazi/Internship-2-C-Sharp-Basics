@@ -92,11 +92,15 @@ namespace Internship_2_C_Sharp_Basics
 
             /* GENERAL FUNCTIONS */
             ///////////////////////
-        static bool UserCheck(string msg = ""){ // user confirmation for the change            
+        static bool UserCheck(string msg = ""){ // user confirmation for the change    
+
+            Console.ForegroundColor = ConsoleColor.Green;
+
             System.Console.WriteLine();
             if(msg != ""){System.Console.WriteLine(msg);} // if parameter is inputed
             System.Console.WriteLine("Jeste li sigurni? d/n: ");
 
+            Console.ForegroundColor = ConsoleColor.White;
             do{
                 var userInput = Console.ReadLine();
 
@@ -147,20 +151,32 @@ namespace Internship_2_C_Sharp_Basics
                 if(oldKey == newKey){
                     System.Console.WriteLine("Pjesma je vec na tom rednom broju");
                 }else if(oldKey > newKey){
+                    string msg=x[oldKey] + " ce doci na " + newKey + ". mjesto";
                     var valueBeforeChange = x[oldKey];
                     for(int i = oldKey;i>newKey;i--){
                         x[i] = x[i-1];
                     }
-                    x[newKey] = valueBeforeChange; 
-                    System.Console.WriteLine("Broj je promijenjen");
+
+                    if(UserCheck(msg)){
+                        x[newKey] = valueBeforeChange; 
+                        System.Console.WriteLine("Broj je promijenjen");
+                    }else{
+                        System.Console.WriteLine("Nista ne mijenjam!");
+                    }
 
                 }else if(oldKey < newKey){
+                    string msg=x[oldKey] + " ce doci na " + newKey + ". mjesto";
                     var valueBeforeChange = x[oldKey];
                     for(int i = oldKey;i<newKey;i++){
                         x[i] = x[i+1];
                     }
-                    x[newKey] = valueBeforeChange; 
-                    System.Console.WriteLine("Broj je promijenjen");
+
+                    if(UserCheck(msg)){
+                        x[newKey] = valueBeforeChange; 
+                        System.Console.WriteLine("Broj je promijenjen");
+                    }else{
+                        System.Console.WriteLine("Nista ne mijenjam!");
+                    }
                 }
             }else{
                 System.Console.WriteLine("Brojevi su pogresni");
@@ -313,14 +329,16 @@ namespace Internship_2_C_Sharp_Basics
             System.Console.WriteLine("Unesite broj pjesme: ");
 
             try{
-            var userKey = int.Parse(Console.ReadLine());
-            
-            System.Console.WriteLine("Kako zelite promijeniti naziv pjesme \"{0}\"?", x[userKey]);
-            var userSongName = Console.ReadLine();
+                var userKey = int.Parse(Console.ReadLine());
+                
+                System.Console.WriteLine("Kako zelite promijeniti naziv pjesme \"{0}\"?", x[userKey]);
+                var userSongName = Console.ReadLine();
 
-            x[userKey] = userSongName;
-
-            System.Console.WriteLine("Naziv promijenjen");
+                string msg = x[userKey] + " ce promijeniti ime u " + userSongName;
+                if(UserCheck(msg)){
+                    x[userKey] = userSongName;
+                    System.Console.WriteLine("Naziv promijenjen");
+                }
             }catch{
                 System.Console.WriteLine("Mozete unijeti samo broj");
             }
@@ -338,7 +356,8 @@ namespace Internship_2_C_Sharp_Basics
             try{
                 var oldKey = int.Parse(Console.ReadLine());
                 
-                System.Console.WriteLine("Unesite novi broj za pjesmu \"{0}\"?", x[oldKey]);
+                
+                System.Console.WriteLine("Unesite novi broj za pjesmu");
                 var newKey = int.Parse(Console.ReadLine());
 
                 ChangeNumber(ref x, oldKey, newKey);
