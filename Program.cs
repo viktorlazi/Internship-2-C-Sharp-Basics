@@ -122,9 +122,19 @@ namespace Internship_2_C_Sharp_Basics
             
             if(!userSong.Equals("")){
                 if(UserCheck()){
-                    var songKey = x.Count + 1;
-                    x.Add(songKey, userSong);
-                    System.Console.WriteLine("Pjesma je unesena u playlistu");
+                    bool songExists = false;
+                    foreach(var pair in x){ // check if song already exists
+                        if(userSong.Equals(pair.Value)){
+                            songExists = true;
+                        }
+                    }
+                    if(!songExists){
+                        var songKey = x.Count + 1;
+                        x.Add(songKey, userSong);
+                        System.Console.WriteLine("Pjesma je unesena u playlistu");
+                    }else{
+                        System.Console.WriteLine("Pjesma vec postoji u playlisti");
+                    }
                 }else{
                     System.Console.WriteLine("Pjesma nije unesena u playlistu");
                 }
