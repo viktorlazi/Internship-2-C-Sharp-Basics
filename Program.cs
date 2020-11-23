@@ -59,6 +59,10 @@ namespace Internship_2_C_Sharp_Basics
                         break;
                     case 7:
                         DeleteDictionary(ref playList);
+                        break;
+                    case 8:
+                        ChangeSongName(ref playList);
+                        break;
                     default:
                         Console.WriteLine("Krivi unos");
                         break;
@@ -182,6 +186,8 @@ namespace Internship_2_C_Sharp_Basics
         }
 
         static void DeleteByKey(ref Dictionary<int, string> x){
+            PrintList(x);
+            System.Console.WriteLine("---------------");
             System.Console.WriteLine("Zelite ukloniti pjesmu.");
             System.Console.WriteLine("Unesite redni broj:");
             var userKey = int.Parse(Console.ReadLine());
@@ -200,6 +206,8 @@ namespace Internship_2_C_Sharp_Basics
         }
 
         static void DeleteByName(ref Dictionary<int, string> x){
+            PrintList(x);
+            System.Console.WriteLine("---------------");
             System.Console.WriteLine("Zelite ukloniti pjesmu.");
             System.Console.WriteLine("Unesite ime pjesme:");
             var userName = Console.ReadLine();
@@ -223,10 +231,35 @@ namespace Internship_2_C_Sharp_Basics
         }
 
         static void DeleteDictionary(ref Dictionary<int, string> x){
-            while(x.Count > 0){
-                x.Remove(x.Count);
+            if(x.Count > 0){ // check if empty
+                System.Console.WriteLine("Zelite obrisati {0} pjesama. Promjene se nece moci vratiti!",x.Count);
+                if(UserCheck()){
+                    while(x.Count > 0){
+                        x.Remove(x.Count);
+                    }
+                    System.Console.WriteLine("Playlista je obrisana!");
+                }else{
+                    System.Console.WriteLine("Playlista je ostala netaknuta. :)");
+                }
+            }else{
+                System.Console.WriteLine("Playlista je vec prazna!");
             }
         }
 
+        static void ChangeSongName(ref Dictionary<int, string> x){
+            PrintList(x);
+            System.Console.WriteLine("---------------");
+            System.Console.WriteLine("Zelite pormijeniti ime pjesme");
+            System.Console.WriteLine("Unesite broj pjesme: ");
+
+            var userKey = int.Parse(Console.ReadLine());
+            
+            System.Console.WriteLine("Kako zelite promijeniti naziv pjesme \"{0}\"?", x[userKey]);
+            var userSongName = Console.ReadLine();
+
+            x[userKey] = userSongName;
+
+            System.Console.WriteLine("Naziv promijenjen");
+        }
     }
 }
