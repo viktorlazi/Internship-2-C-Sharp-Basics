@@ -18,7 +18,7 @@ namespace Internship_2_C_Sharp_Basics
 
             
 
-            do{
+            while(userInput != 0){
                 Console.WriteLine(
                 "1 - Ispis cijele liste \n" +
                 "2 - Ispis imena pjesme unosom pripadajućeg rednog broja \n" +
@@ -39,16 +39,16 @@ namespace Internship_2_C_Sharp_Basics
                     case 0:
                         break;
                     case 1:
-                        printList(playList);
+                        PrintList(playList);
                         break;
                     case 2:
-                        printByKey(playList);
+                        PrintByKey(playList);
                         break;
                     case 3:
-                        printByValue(playList);
+                        PrintByValue(playList);
                         break;
                     case 4:
-                        newSong(ref playList);
+                        NewSong(ref playList);
                         break;
                     default:
                         Console.WriteLine("Krivi unos");
@@ -59,10 +59,10 @@ namespace Internship_2_C_Sharp_Basics
                 Console.ReadLine();
 
                 Console.Clear();
-            }while(userInput != 0);
+            }
         }
 
-        static bool userCheck(){
+        static bool UserCheck(){
             System.Console.WriteLine("Jeste li sigurni? d/n: ");
 
             do{
@@ -80,13 +80,13 @@ namespace Internship_2_C_Sharp_Basics
                 }
             }while(true);
         }
-        static void printList(Dictionary<int, string> x){
+        static void PrintList(Dictionary<int, string> x){
             System.Console.WriteLine("Playlista:");
             foreach(var pair in x){
                 System.Console.WriteLine("{0} - {1}", pair.Key, pair.Value);
             }   
         }
-        static void printByKey(Dictionary<int, string> x){
+        static void PrintByKey(Dictionary<int, string> x){
             Console.WriteLine("Unesi redni broj pjesme: ");
             int userKey = int.Parse(System.Console.ReadLine());
 
@@ -98,7 +98,7 @@ namespace Internship_2_C_Sharp_Basics
             }
         }
 
-        static void printByValue(Dictionary<int, string> x){
+        static void PrintByValue(Dictionary<int, string> x){
             Console.WriteLine("Unesi naziv pjesme: ");
             string userName = System.Console.ReadLine();
 
@@ -114,14 +114,14 @@ namespace Internship_2_C_Sharp_Basics
                 System.Console.WriteLine("Pjesma ne postoji");
             } 
         }
-        static void newSong(ref Dictionary<int, string> x){
+        static void NewSong(ref Dictionary<int, string> x){
             System.Console.WriteLine("Zelite unijeti novu pjesmu.");
             System.Console.WriteLine("Naziv pjesme: ");
 
             var userSong = Console.ReadLine();
             
             if(!userSong.Equals("")){
-                if(userCheck()){
+                if(UserCheck()){
                     var songKey = x.Count + 1;
                     x.Add(songKey, userSong);
                     System.Console.WriteLine("Pjesma je unesena u playlistu");
@@ -131,6 +131,10 @@ namespace Internship_2_C_Sharp_Basics
             }else{
                 System.Console.WriteLine("Niste unijeli naziv");
             }
+        }
+
+        static void DeleteByKey(){
+
         }
 
     }
