@@ -29,15 +29,8 @@ namespace Internship_2_C_Sharp_Basics
                 "0 - Izlaz iz aplikacije"
                 );
                 
+                try{
                 var userInput = Console.ReadLine();
-                if(!int.TryParse(userInput, out var value)){
-                    Console.Clear();
-                    System.Console.WriteLine("Mozete unijeti samo broj!");
-                    System.Console.WriteLine("\n\n\n -- Enter za povratak ---");
-                    Console.ReadLine();
-                    Console.Clear();
-                    continue;
-                }
                 Console.Clear();
 
                 switch(int.Parse(userInput)){
@@ -45,7 +38,9 @@ namespace Internship_2_C_Sharp_Basics
                         Environment.Exit(0);
                         break;
                     case 1:
+                        Console.ForegroundColor = ConsoleColor.Red;
                         PrintList(playList);
+                        Console.ForegroundColor = ConsoleColor.White;
                         break;
                     case 2:
                         PrintByKey(playList);
@@ -80,6 +75,14 @@ namespace Internship_2_C_Sharp_Basics
                 Console.ReadLine();
 
                 Console.Clear();
+                }
+                catch{
+                    Console.Clear();
+                    System.Console.WriteLine("Mozete unijeti samo broj!");
+                    System.Console.WriteLine("\n\n\n -- Enter za povratak ---");
+                    Console.ReadLine();
+                    Console.Clear();
+                }
             }while(true);
         }
 
@@ -133,6 +136,33 @@ namespace Internship_2_C_Sharp_Basics
             return songKey;
         }
 
+        static void ChangeNumber(ref Dictionary<int,string> x, int oldKey, int newKey){
+
+            //check if valid input
+            if(oldKey > 0 && oldKey <= x.Count && newKey > 0 && newKey <= x.Count ){
+                if(oldKey == newKey){
+                    System.Console.WriteLine("Pjesma je vec na tom rednom broju");
+                }else if(oldKey > newKey){
+                    var valueBeforeChange = x[oldKey];
+                    for(int i = oldKey;i>newKey;i--){
+                        x[i] = x[i-1];
+                    }
+                    x[newKey] = valueBeforeChange; 
+                    System.Console.WriteLine("Broj je promijenjen");
+
+                }else if(oldKey < newKey){
+                    var valueBeforeChange = x[oldKey];
+                    for(int i = oldKey;i<newKey;i++){
+                        x[i] = x[i+1];
+                    }
+                    x[newKey] = valueBeforeChange; 
+                    System.Console.WriteLine("Broj je promijenjen");
+                }
+            }else{
+                System.Console.WriteLine("Brojevi su pogresni");
+                return;
+            }            
+        }
             /* PROGRAM FUNCTIONS */
             ///////////////////////
         static void PrintList(Dictionary<int, string> x){
@@ -148,13 +178,17 @@ namespace Internship_2_C_Sharp_Basics
 
         static void PrintByKey(Dictionary<int, string> x){
             Console.WriteLine("Unesi redni broj pjesme: ");
-            int userKey = int.Parse(System.Console.ReadLine());
+            try{
+                int userKey = int.Parse(System.Console.ReadLine());
 
-            string songName;
-            if(x.TryGetValue(userKey, out songName)){
-                Console.WriteLine("Naziv pjesme: {0}", songName);
-            }else{
-                System.Console.WriteLine("Pjesma ne postoji.");
+                string songName;
+                if(x.TryGetValue(userKey, out songName)){
+                    Console.WriteLine("Naziv pjesme: {0}", songName);
+                }else{
+                    System.Console.WriteLine("Pjesma ne postoji.");
+                }
+            }catch{
+                System.Console.WriteLine("Mozete unijeti samo broj!");
             }
         }
 
@@ -194,27 +228,38 @@ namespace Internship_2_C_Sharp_Basics
         }
 
         static void DeleteByKey(ref Dictionary<int, string> x){
+            Console.ForegroundColor = ConsoleColor.Red;
             PrintList(x);
+            Console.ForegroundColor = ConsoleColor.White;
+            
             System.Console.WriteLine("---------------");
             System.Console.WriteLine("Zelite ukloniti pjesmu.");
             System.Console.WriteLine("Unesite redni broj:");
-            var userKey = int.Parse(Console.ReadLine());
-
-            string songName;
-            if(x.TryGetValue(userKey, out songName)){ // check if exists
-                string msg = "Zelite ukloniti pjesmu \"" + songName + "\"";
-                if(UserCheck(msg)){
-                    RemoveByKey(ref x, userKey); 
+            
+            try{
+                var userKey = int.Parse(Console.ReadLine());
+            
+                string songName;
+                if(x.TryGetValue(userKey, out songName)){ // check if exists
+                    string msg = "Zelite ukloniti pjesmu \"" + songName + "\"";
+                    if(UserCheck(msg)){
+                        RemoveByKey(ref x, userKey); 
+                    }else{
+                        System.Console.WriteLine("Pjesma \"" + songName + "\" nece biti uklonjena!");
+                    }
                 }else{
-                    System.Console.WriteLine("Pjesma \"" + songName + "\" nece biti uklonjena!");
+                    System.Console.WriteLine("Pjesma ne postoji.");
                 }
-            }else{
-                System.Console.WriteLine("Pjesma ne postoji.");
+            }catch(Exception e){
+                System.Console.WriteLine("Pogresan unos");
             }
         }
 
         static void DeleteByName(ref Dictionary<int, string> x){
+            Console.ForegroundColor = ConsoleColor.Red;
             PrintList(x);
+            Console.ForegroundColor = ConsoleColor.White;
+
             System.Console.WriteLine("---------------");
             System.Console.WriteLine("Zelite ukloniti pjesmu.");
             System.Console.WriteLine("Unesite ime pjesme:");
@@ -255,11 +300,15 @@ namespace Internship_2_C_Sharp_Basics
         }
 
         static void ChangeSongName(ref Dictionary<int, string> x){
+            Console.ForegroundColor = ConsoleColor.Red;
             PrintList(x);
+            Console.ForegroundColor = ConsoleColor.White;
+
             System.Console.WriteLine("---------------");
             System.Console.WriteLine("Zelite pormijeniti ime pjesme.");
             System.Console.WriteLine("Unesite broj pjesme: ");
 
+            try{
             var userKey = int.Parse(Console.ReadLine());
             
             System.Console.WriteLine("Kako zelite promijeniti naziv pjesme \"{0}\"?", x[userKey]);
@@ -268,44 +317,31 @@ namespace Internship_2_C_Sharp_Basics
             x[userKey] = userSongName;
 
             System.Console.WriteLine("Naziv promijenjen");
+            }catch{
+                System.Console.WriteLine("Mozete unijeti samo broj");
+            }
         }
     
         static void ChangeSongKey(ref Dictionary<int, string> x){
+            Console.ForegroundColor = ConsoleColor.Red;
             PrintList(x);
+            Console.ForegroundColor = ConsoleColor.White;
+            
             System.Console.WriteLine("---------------");
             System.Console.WriteLine("Zelite pormijeniti broj pjesme.");
             System.Console.WriteLine("Unesite broj pjesme: ");
 
-            var oldKey = int.Parse(Console.ReadLine());
-            
-            System.Console.WriteLine("Unesite novi broj za pjesmu \"{0}\"?", x[oldKey]);
-            var newKey = int.Parse(Console.ReadLine());
-
-            if(oldKey == newKey){
-                System.Console.WriteLine("Pjesma je vec na tom rednom broju");
-            }else if(oldKey > newKey){
-                var valueBeforeChange = x[oldKey];
-                for(int i = oldKey;i>newKey;i--){
-                    x[i-1] = x[i];
-                    System.Console.WriteLine("ej");
-                }
-                x[newKey] = valueBeforeChange; 
-
-            }else if(oldKey < newKey){
+            try{
+                var oldKey = int.Parse(Console.ReadLine());
                 
+                System.Console.WriteLine("Unesite novi broj za pjesmu \"{0}\"?", x[oldKey]);
+                var newKey = int.Parse(Console.ReadLine());
+
+                ChangeNumber(ref x, oldKey, newKey);
             }
-            /*
-            1
-            2
-            3 prvi     peti
-            4 drugi    prvi
-            5 treci    drugi
-            6 cetvrti  treci
-            7 peti     cetvrti
-            8
-            9 
-            */
-            System.Console.WriteLine("Broj promijenjen");
+            catch{
+                System.Console.WriteLine("Mozete unijeti samo broj!");
+            }
         }
     }
 }
