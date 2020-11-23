@@ -54,6 +54,9 @@ namespace Internship_2_C_Sharp_Basics
                     case 5:
                         DeleteByKey(playList);
                         break;
+                    case 6:
+                        DeleteByName(playList);
+                        break;
                     default:
                         Console.WriteLine("Krivi unos");
                         break;
@@ -66,6 +69,7 @@ namespace Internship_2_C_Sharp_Basics
             }while(userInput != 0);
         }
 
+            /* GENERAL FUNCTIONS */
         static bool UserCheck(string msg = ""){ // user confirmation for the change
             
             System.Console.WriteLine();
@@ -87,6 +91,24 @@ namespace Internship_2_C_Sharp_Basics
                 }
             }while(true);
         }
+
+        static void RemoveByKey(ref Dictionary<int, string> x, int songKey){
+            foreach(var pair in x){
+                if(pair.Key == x.Count){
+                    x.Remove(pair.Key);
+                    System.Console.WriteLine("Pjesma je uklonjena.");
+                }
+                else if(pair.Key >= songKey){
+                    x[pair.Key] = x[pair.Key+1];
+                }
+            }
+        }
+
+        static void FindByName(ref Dictionary<int,string> x, string name){
+            
+        }
+
+            /* PROGRAM FUNCTIONS */
         static void PrintList(Dictionary<int, string> x){
             if(x.Count > 0){
                 
@@ -166,20 +188,40 @@ namespace Internship_2_C_Sharp_Basics
             if(x.TryGetValue(userKey, out songName)){
                 string msg = "Zelite ukloniti pjesmu \"" + songName + "\"";
                 if(UserCheck(msg)){
-                    foreach(var pair in x){
-                        if(pair.Key == x.Count){
-                            x.Remove(pair.Key);
-                            System.Console.WriteLine("Pjesma je uklonjena.");
-                        }
-                        else if(pair.Key >= userKey){
-                            x[pair.Key] = x[pair.Key+1];
-                        }
-                    }
+                    RemoveByKey(ref x, userKey);
                 }else{
                     System.Console.WriteLine("Pjesma \"" + songName + "\" nece biti uklonjena!");
                 }
             }else{
                 System.Console.WriteLine("Pjesma ne postoji.");
+            }
+        }
+
+        static void DeleteByName(Dictionary<int, string> x){
+            System.Console.WriteLine("Zelite ukloniti pjesmu.");
+            System.Console.WriteLine("Unesite ime pjesme:");
+            var userName = Console.ReadLine();
+
+            bool found = false;
+            int songKey = 0;
+            foreach(var pair in x){
+                if(userName.Equals(pair.Value)){
+                    found = true;
+                    songKey = pair.Key;
+                    break;
+                }
+            }
+            if(found){
+                string msg = "Zelite ukloniti pjesmu \"" + userName + "\"";
+                if(UserCheck(msg)){
+                    RemoveByKey(ref x, songKey);
+                }else{
+                    System.Console.WriteLine("Pjesma \"" + userName + "\" nece biti uklonjena!");
+                }
+            }else{
+                System.Console.WriteLine("Pjesma pod nazivom \"" +
+                                            userName +
+                                            "\" ne postoji u playlisti");
             }
         }
 
