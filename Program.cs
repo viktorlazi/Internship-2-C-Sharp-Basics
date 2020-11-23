@@ -18,7 +18,7 @@ namespace Internship_2_C_Sharp_Basics
 
             
 
-            while(userInput != 0){
+            do{
                 Console.WriteLine(
                 "1 - Ispis cijele liste \n" +
                 "2 - Ispis imena pjesme unosom pripadajućeg rednog broja \n" +
@@ -48,7 +48,7 @@ namespace Internship_2_C_Sharp_Basics
                         PrintByValue(playList);
                         break;
                     case 4:
-                        NewSong(ref playList);
+                        NewSong(playList);
                         break;
                     default:
                         Console.WriteLine("Krivi unos");
@@ -59,7 +59,7 @@ namespace Internship_2_C_Sharp_Basics
                 Console.ReadLine();
 
                 Console.Clear();
-            }
+            }while(userInput != 0);
         }
 
         static bool UserCheck(){
@@ -114,7 +114,7 @@ namespace Internship_2_C_Sharp_Basics
                 System.Console.WriteLine("Pjesma ne postoji");
             } 
         }
-        static void NewSong(ref Dictionary<int, string> x){
+        static void NewSong(Dictionary<int, string> x){
             System.Console.WriteLine("Zelite unijeti novu pjesmu.");
             System.Console.WriteLine("Naziv pjesme: ");
 
@@ -136,6 +136,5 @@ namespace Internship_2_C_Sharp_Basics
         static void DeleteByKey(){
 
         }
-
     }
 }
