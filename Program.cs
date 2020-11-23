@@ -9,14 +9,10 @@ namespace Internship_2_C_Sharp_Basics
         {
             Console.Clear(); // clear the terminal at the start
 
-            int userInput = 0;
             var playList = new Dictionary<int, string>();
             playList.Add(1, "Lemon song");
             playList.Add(2, "Lijepe zene prolaze kroz grad");
             playList.Add(3, "Milde sorte");
-
-
-            
 
             do{
                 Console.WriteLine(
@@ -32,10 +28,19 @@ namespace Internship_2_C_Sharp_Basics
                 "10 - Shuffle pjesama \n" +
                 "0 - Izlaz iz aplikacije"
                 );
-                userInput = int.Parse(Console.ReadLine());
+                
+                var userInput = Console.ReadLine();
+                if(!int.TryParse(userInput, out var value)){
+                    Console.Clear();
+                    System.Console.WriteLine("Mozete unijeti samo broj!");
+                    System.Console.WriteLine("\n\n\n -- Enter za povratak ---");
+                    Console.ReadLine();
+                    Console.Clear();
+                    continue;
+                }
                 Console.Clear();
 
-                switch(userInput){
+                switch(int.Parse(userInput)){
                     case 0:
                         Environment.Exit(0);
                         break;
@@ -63,6 +68,9 @@ namespace Internship_2_C_Sharp_Basics
                     case 8:
                         ChangeSongName(ref playList);
                         break;
+                    case 9:
+                        ChangeSongKey(ref playList);
+                        break;
                     default:
                         Console.WriteLine("Krivi unos");
                         break;
@@ -72,7 +80,7 @@ namespace Internship_2_C_Sharp_Basics
                 Console.ReadLine();
 
                 Console.Clear();
-            }while(userInput != 0);
+            }while(true);
         }
 
             /* GENERAL FUNCTIONS */
@@ -249,7 +257,7 @@ namespace Internship_2_C_Sharp_Basics
         static void ChangeSongName(ref Dictionary<int, string> x){
             PrintList(x);
             System.Console.WriteLine("---------------");
-            System.Console.WriteLine("Zelite pormijeniti ime pjesme");
+            System.Console.WriteLine("Zelite pormijeniti ime pjesme.");
             System.Console.WriteLine("Unesite broj pjesme: ");
 
             var userKey = int.Parse(Console.ReadLine());
@@ -260,6 +268,44 @@ namespace Internship_2_C_Sharp_Basics
             x[userKey] = userSongName;
 
             System.Console.WriteLine("Naziv promijenjen");
+        }
+    
+        static void ChangeSongKey(ref Dictionary<int, string> x){
+            PrintList(x);
+            System.Console.WriteLine("---------------");
+            System.Console.WriteLine("Zelite pormijeniti broj pjesme.");
+            System.Console.WriteLine("Unesite broj pjesme: ");
+
+            var oldKey = int.Parse(Console.ReadLine());
+            
+            System.Console.WriteLine("Unesite novi broj za pjesmu \"{0}\"?", x[oldKey]);
+            var newKey = int.Parse(Console.ReadLine());
+
+            if(oldKey == newKey){
+                System.Console.WriteLine("Pjesma je vec na tom rednom broju");
+            }else if(oldKey > newKey){
+                var valueBeforeChange = x[oldKey];
+                for(int i = oldKey;i>newKey;i--){
+                    x[i-1] = x[i];
+                    System.Console.WriteLine("ej");
+                }
+                x[newKey] = valueBeforeChange; 
+
+            }else if(oldKey < newKey){
+                
+            }
+            /*
+            1
+            2
+            3 prvi     peti
+            4 drugi    prvi
+            5 treci    drugi
+            6 cetvrti  treci
+            7 peti     cetvrti
+            8
+            9 
+            */
+            System.Console.WriteLine("Broj promijenjen");
         }
     }
 }
