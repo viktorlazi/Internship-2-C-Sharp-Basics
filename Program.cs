@@ -88,11 +88,17 @@ namespace Internship_2_C_Sharp_Basics
             }while(true);
         }
         static void PrintList(Dictionary<int, string> x){
-            System.Console.WriteLine("Playlista:");
-            foreach(var pair in x){
-                System.Console.WriteLine("{0} - {1}", pair.Key, pair.Value);
-            }   
+            if(x.Count > 0){
+                
+                System.Console.WriteLine("Playlista:");
+                foreach(var pair in x){
+                    System.Console.WriteLine("{0} - {1}", pair.Key, pair.Value);
+                }   
+            }else{
+                System.Console.WriteLine("Playlista je prazna");
+            }
         }
+
         static void PrintByKey(Dictionary<int, string> x){
             Console.WriteLine("Unesi redni broj pjesme: ");
             int userKey = int.Parse(System.Console.ReadLine());
@@ -158,10 +164,24 @@ namespace Internship_2_C_Sharp_Basics
 
             string songName;
             if(x.TryGetValue(userKey, out songName)){
-                Console.WriteLine("Naziv pjesme: {0}", songName);
+                string msg = "Zelite ukloniti pjesmu \"" + songName + "\"";
+                if(UserCheck(msg)){
+                    foreach(var pair in x){
+                        if(pair.Key == x.Count){
+                            x.Remove(pair.Key);
+                            System.Console.WriteLine("Pjesma je uklonjena.");
+                        }
+                        else if(pair.Key >= userKey){
+                            x[pair.Key] = x[pair.Key+1];
+                        }
+                    }
+                }else{
+                    System.Console.WriteLine("Pjesma \"" + songName + "\" nece biti uklonjena!");
+                }
             }else{
                 System.Console.WriteLine("Pjesma ne postoji.");
             }
         }
+
     }
 }
