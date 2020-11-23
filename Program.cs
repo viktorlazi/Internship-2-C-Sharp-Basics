@@ -37,6 +37,7 @@ namespace Internship_2_C_Sharp_Basics
 
                 switch(userInput){
                     case 0:
+                        Environment.Exit(0);
                         break;
                     case 1:
                         PrintList(playList);
@@ -50,6 +51,9 @@ namespace Internship_2_C_Sharp_Basics
                     case 4:
                         NewSong(playList);
                         break;
+                    case 5:
+                        DeleteByKey(playList);
+                        break;
                     default:
                         Console.WriteLine("Krivi unos");
                         break;
@@ -62,7 +66,10 @@ namespace Internship_2_C_Sharp_Basics
             }while(userInput != 0);
         }
 
-        static bool UserCheck(){
+        static bool UserCheck(string msg = ""){ // user confirmation for the change
+            
+            System.Console.WriteLine();
+            if(msg != ""){System.Console.WriteLine(msg);} // if parameter is inputed
             System.Console.WriteLine("Jeste li sigurni? d/n: ");
 
             do{
@@ -119,9 +126,10 @@ namespace Internship_2_C_Sharp_Basics
             System.Console.WriteLine("Naziv pjesme: ");
 
             var userSong = Console.ReadLine();
+            string msg = "Zelite unijeti pjesmu \"" + userSong + "\"";
             
             if(!userSong.Equals("")){
-                if(UserCheck()){
+                if(UserCheck(msg)){
                     bool songExists = false;
                     foreach(var pair in x){ // check if song already exists
                         if(userSong.Equals(pair.Value)){
@@ -143,8 +151,17 @@ namespace Internship_2_C_Sharp_Basics
             }
         }
 
-        static void DeleteByKey(){
+        static void DeleteByKey(Dictionary<int, string> x){
+            System.Console.WriteLine("Zelite ukloniti pjesmu.");
+            System.Console.WriteLine("Unesite redni broj:");
+            var userKey = int.Parse(Console.ReadLine());
 
+            string songName;
+            if(x.TryGetValue(userKey, out songName)){
+                Console.WriteLine("Naziv pjesme: {0}", songName);
+            }else{
+                System.Console.WriteLine("Pjesma ne postoji.");
+            }
         }
     }
 }
