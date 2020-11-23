@@ -66,6 +66,9 @@ namespace Internship_2_C_Sharp_Basics
                     case 9:
                         ChangeSongKey(ref playList);
                         break;
+                    case 10:
+                        Shuffle(playList);
+                        break;
                     default:
                         Console.WriteLine("Krivi unos");
                         break;
@@ -342,6 +345,12 @@ namespace Internship_2_C_Sharp_Basics
             catch{
                 System.Console.WriteLine("Mozete unijeti samo broj!");
             }
+        }
+
+        static void Shuffle(Dictionary<int, string> x){
+            System.Console.WriteLine("Shuffle pjesma:");
+            Random rndSong = new Random();
+            System.Console.WriteLine(x[rndSong.Next(1, x.Count+1)]);
         }
     }
 }
