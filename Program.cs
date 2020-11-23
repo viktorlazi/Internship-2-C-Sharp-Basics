@@ -9,10 +9,11 @@ namespace Internship_2_C_Sharp_Basics
         {
             Console.Clear(); // clear the terminal at the start
 
-            var playList = new Dictionary<int, string>();
-            playList.Add(1, "Lemon song");
-            playList.Add(2, "Lijepe zene prolaze kroz grad");
-            playList.Add(3, "Milde sorte");
+            var playList = new Dictionary<int, string>(){
+                {1,"Lemon song"},
+                {2,"Lijepe zene prolaze kroz grad"},
+                {3,"Milde sorte"}
+            };
 
             do{
                 Console.WriteLine(
