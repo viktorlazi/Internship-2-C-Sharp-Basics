@@ -68,7 +68,7 @@ namespace Internship_2_C_Sharp_Basics
                         ChangeSongKey(ref playList);
                         break;
                     case 10:
-                        Shuffle(playList);
+                        Shuffle(ref playList);
                         break;
                     default:
                         Console.WriteLine("Krivi unos");
@@ -350,7 +350,7 @@ namespace Internship_2_C_Sharp_Basics
             Console.ForegroundColor = ConsoleColor.White;
             
             System.Console.WriteLine("---------------");
-            System.Console.WriteLine("Zelite pormijeniti broj pjesme.");
+            System.Console.WriteLine("Zelite promijeniti broj pjesme.");
             System.Console.WriteLine("Unesite broj pjesme: ");
 
             try{
@@ -367,10 +367,18 @@ namespace Internship_2_C_Sharp_Basics
             }
         }
 
-        static void Shuffle(Dictionary<int, string> x){
-            System.Console.WriteLine("Shuffle pjesma:");
-            Random rndSong = new Random();
-            System.Console.WriteLine(x[rndSong.Next(1, x.Count+1)]);
+        static void Shuffle(ref Dictionary<int, string> x){
+
+            for(int i = 1;i<=x.Count;i++){    // loop through dictionary and for every key assign random value
+                Random rnd = new Random();
+                var rndKey = rnd.Next(1, x.Count+1);
+                
+                var oldValue = x[i];
+                x[i] = x[rndKey];
+                x[rndKey]=oldValue;
+
+            }
+            System.Console.WriteLine("Izmijesano!");
         }
     }
 }
