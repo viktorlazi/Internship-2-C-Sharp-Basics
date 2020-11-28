@@ -101,7 +101,7 @@ namespace Internship_2_C_Sharp_Basics
             System.Console.WriteLine("Jeste li sigurni? d/n: ");
 
             Console.ForegroundColor = ConsoleColor.White;
-            do{
+            while(true){
                 var userInput = Console.ReadLine();
 
                 if(userInput.Equals("d") || userInput.Equals("da")){
@@ -114,7 +114,7 @@ namespace Internship_2_C_Sharp_Basics
                                     "da/ne/d/n \n");
                     System.Console.WriteLine("Jeste li sigurni? d/n: ");
                 }
-            }while(true); // if the input is invalid, ask again...
+            } // if the input is invalid, ask again...
         }
 
         static void RemoveByKey(ref Dictionary<int, string> x, int songKey){
