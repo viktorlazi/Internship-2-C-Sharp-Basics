@@ -307,9 +307,7 @@ namespace Internship_2_C_Sharp_Basics
             if(x.Count > 0){ // check if empty
                 System.Console.WriteLine("Zelite obrisati {0} pjesama. Promjene se nece moci vratiti!",x.Count);
                 if(UserCheck()){
-                    while(x.Count > 0){
-                        x.Remove(x.Count);
-                    }
+                    x.Clear();
                     System.Console.WriteLine("Playlista je obrisana!");
                 }else{
                     System.Console.WriteLine("Playlista je ostala netaknuta. :)");
