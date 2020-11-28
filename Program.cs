@@ -270,7 +270,7 @@ namespace Internship_2_C_Sharp_Basics
                 }else{
                     System.Console.WriteLine("Pjesma ne postoji.");
                 }
-            }catch(Exception e){
+            }catch{
                 System.Console.WriteLine("Pogresan unos");
             }
         }
