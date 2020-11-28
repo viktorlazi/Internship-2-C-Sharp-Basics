@@ -369,16 +369,20 @@ namespace Internship_2_C_Sharp_Basics
 
         static void Shuffle(ref Dictionary<int, string> x){
 
-            for(int i = 1;i<=x.Count;i++){    // loop through dictionary and for every key assign random value
-                Random rnd = new Random();
-                var rndKey = rnd.Next(1, x.Count+1);
-                
-                var oldValue = x[i];
-                x[i] = x[rndKey];
-                x[rndKey]=oldValue;
+            if(UserCheck("Brojevi pjesama ce se nasumicno promijeniti!")){
+                for(int i = 1;i<=x.Count;i++){    // loop through dictionary and for every key assign random value
+                    Random rnd = new Random();
+                    var rndKey = rnd.Next(1, x.Count+1);
+                    
+                    var oldValue = x[i];
+                    x[i] = x[rndKey];
+                    x[rndKey]=oldValue;
 
+                }
+                System.Console.WriteLine("Izmijesano!");
+            }else{
+                System.Console.WriteLine("Brojevi su ostali nepromijenjeni");
             }
-            System.Console.WriteLine("Izmijesano!");
         }
     }
 }
